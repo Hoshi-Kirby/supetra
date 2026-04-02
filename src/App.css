@@ -1,0 +1,229 @@
+#root {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+:root {
+  --btn-left: clamp(120px, 30vw, 260px);
+  --btn-right: clamp(100px, 25vw, 220px);
+  --font-size: clamp(16px, 6vw, 48px);
+  --bag-size: 50vh;
+}
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* ← スクロール禁止 */
+}
+
+.game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.bg-base {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgb(8, 121, 207), rgb(53, 169, 237));
+  background-position: center;
+}
+.bg-plus {
+  position: absolute;
+  inset: 0;
+  background-image: url("./assets/plus.png");
+  background-size: cover;
+  background-repeat: repeat;
+  animation: movePlus 8s linear infinite;
+}
+
+@keyframes movePlus {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 12.5vw 12.5vw;
+  }
+}
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: url("./assets/grid.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.top-ui {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  background-position: center;
+  background-size: 100% auto;
+}
+
+.bottom-ui-wrapper {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  bottom: 0;
+}
+
+.bottom-ui {
+  width: 100%;
+  height: auto;
+  display: block;
+  bottom: 0;
+  background-position: center;
+  background-size: 100% auto;
+}
+
+.button-wrapper .left-button-wrapper,
+.button-wrapper .right-button {
+  transition: transform 0.3s ease;
+}
+
+/* 左右の通常位置 */
+.right-button {
+  width: 20vw;
+  height: auto;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  pointer-events: auto;
+}
+
+.left-button-wrapper {
+  width: auto;
+  height: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  pointer-events: auto;
+}
+
+.left-button {
+  width: 20vw;
+  height: auto;
+  display: block;
+  bottom: 0;
+  left: 0;
+  pointer-events: auto;
+}
+
+/* 退くとき */
+.button-wrapper.open .left-button-wrapper {
+  transform: translateX(-80%);
+}
+
+.button-wrapper.open .right-button {
+  transform: translateX(70%);
+}
+
+.category-label {
+  position: absolute;
+  top: 64%;
+  left: 39%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  font-size: 5vw;
+  color: rgb(255, 255, 255);
+  -webkit-text-stroke: 0.04em #000000;
+  text-stroke: 0.04em #000000;
+  font-weight: bold;
+}
+
+.category-bar {
+  position: absolute;
+  display: flex;
+  gap: 5%;
+  top: 96%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  font-size: 5vw;
+  color: rgb(255, 255, 255);
+  -webkit-text-stroke: 0.04em #000000;
+  text-stroke: 0.04em #000000;
+  font-weight: bold;
+}
+
+.bag {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+  width: auto;
+  height: 50%;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .right-button {
+    width: 40vw;
+  }
+  .left-button {
+    width: 40vw;
+  }
+  .category-label {
+    font-size: 10vw;
+  }
+  .category-bar {
+    left: 42%;
+    font-size: 10vw;
+  }
+  .bag {
+    top: 10%;
+    left: 5%;
+  }
+}
+
+@media (orientation: landscape) {
+  .portrait {
+    display: none;
+  }
+}
+@media (orientation: portrait) {
+  .landscape {
+    display: none;
+  }
+}
