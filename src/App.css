@@ -242,6 +242,34 @@ body {
   }
 }
 
+.bag.fly {
+  animation: flyAway 0.8s ease-out forwards;
+  transform-origin: 50% 0%;
+}
+
+@keyframes flyAway {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(540deg);
+    opacity: 0;
+  }
+}
+
+.bag.drop {
+  animation: dropBag 0.5s ease-out forwards;
+}
+
+@keyframes dropBag {
+  0% {
+    transform: translateY(-50vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 @media (max-aspect-ratio: 1/1) {
   .right-button {
     width: 40vw;

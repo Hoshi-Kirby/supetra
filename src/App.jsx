@@ -6,12 +6,19 @@ import uiDown from "./assets/down.png";
 import uiDown2 from "./assets/down2.png";
 import buttonLeft from "./assets/leftbutton.png";
 import buttonRight from "./assets/rightbutton.png";
-import SL from "./assets/SL.png";
-
+import CL from "./assets/CL.png";
+const bagImages = {
+  C: { S: CL, M: CL, L: CL },
+};
 function App() {
   const [buttonsOpen, setButtonsOpen] = useState(true);
   const [category, setCategory] = useState("all");
+  const [bagType, setBagType] = useState("C");
+  const [bagSize, setBagSize] = useState("L");
   const [shake, setShake] = useState(false);
+  const [fly, setFly] = useState(false);
+  const [drop, setDrop] = useState(false);
+  const [tackleNum, setTackleNum] = useState(0);
 
   const handleLeftClick = (e) => {
     e.stopPropagation();
@@ -41,12 +48,31 @@ function App() {
   };
 
   const handleBackgroundClick = () => {
-    setButtonsOpen(true);
-    if (!shake) {
-      setTimeout(() => {
-        setShake(true);
-        setTimeout(() => setShake(false), 300);
-      }, 100);
+    if (buttonsOpen) {
+      if (!shake && !fly) {
+        if (tackleNum == 9) {
+          setTackleNum(0);
+          setTimeout(() => {
+            setFly(true);
+            setTimeout(() => {
+              setFly(false);
+              setDrop(true);
+
+              setTimeout(() => {
+                setDrop(false);
+              }, 500);
+            }, 800);
+          }, 800);
+        } else {
+          setTackleNum(tackleNum + 1);
+          setTimeout(() => {
+            setShake(true);
+            setTimeout(() => setShake(false), 300);
+          }, 100);
+        }
+      }
+    } else {
+      setButtonsOpen(true);
     }
   };
 
@@ -56,7 +82,10 @@ function App() {
       <div className="bg-plus"></div>
       <div className="bg-grid"></div>
 
-      <img src={SL} className={`bag ${shake ? "shake" : ""}`} />
+      <img
+        src={bagImages[bagType][bagSize]}
+        className={`bag ${shake ? "shake" : ""} ${fly ? "fly" : ""} ${drop ? "drop" : ""}`}
+      />
 
       <img src={uiUp} className="top-ui landscape" />
       <img src={uiUp2} className="top-ui portrait" />
