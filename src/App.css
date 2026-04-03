@@ -76,17 +76,35 @@ body {
   background-image: url("./assets/plus.png");
   background-size: cover;
   background-repeat: repeat;
-  animation: movePlus 8s linear infinite;
 }
-
-@keyframes movePlus {
+@media (orientation: landscape) {
+  .bg-plus {
+    animation: movePlusLandscape 8s linear infinite;
+  }
+}
+/* 縦向き */
+@media (orientation: portrait) {
+  .bg-plus {
+    animation: movePlusPortrait 8s linear infinite;
+  }
+}
+@keyframes movePlusLandscape {
   from {
     background-position: 0 0;
   }
   to {
-    background-position: 12.5vw 12.5vw;
+    background-position: calc(100vw / 8) calc(100vw / 8);
   }
 }
+@keyframes movePlusPortrait {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: calc(100vh / 6) calc(100vh / 6);
+  }
+}
+
 .bg-grid {
   position: absolute;
   inset: 0;
@@ -195,6 +213,33 @@ body {
   left: 10%;
   width: auto;
   height: 50%;
+  transform-origin: top center;
+  transition: transform 0.1s ease-out;
+}
+
+.shake {
+  animation: swing 0.3s ease-out;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(10deg);
+  }
+  40% {
+    transform: rotate(-8deg);
+  }
+  60% {
+    transform: rotate(6deg);
+  }
+  80% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 @media (max-aspect-ratio: 1/1) {

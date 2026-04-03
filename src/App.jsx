@@ -11,6 +11,7 @@ import SL from "./assets/SL.png";
 function App() {
   const [buttonsOpen, setButtonsOpen] = useState(true);
   const [category, setCategory] = useState("all");
+  const [shake, setShake] = useState(false);
 
   const handleLeftClick = (e) => {
     e.stopPropagation();
@@ -41,6 +42,12 @@ function App() {
 
   const handleBackgroundClick = () => {
     setButtonsOpen(true);
+    if (!shake) {
+      setTimeout(() => {
+        setShake(true);
+        setTimeout(() => setShake(false), 300);
+      }, 100);
+    }
   };
 
   return (
@@ -49,7 +56,7 @@ function App() {
       <div className="bg-plus"></div>
       <div className="bg-grid"></div>
 
-      <img src={SL} className="bag" />
+      <img src={SL} className={`bag ${shake ? "shake" : ""}`} />
 
       <img src={uiUp} className="top-ui landscape" />
       <img src={uiUp2} className="top-ui portrait" />
