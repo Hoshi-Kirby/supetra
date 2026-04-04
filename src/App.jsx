@@ -6,11 +6,33 @@ import uiDown from "./assets/down.png";
 import uiDown2 from "./assets/down2.png";
 import buttonLeft from "./assets/leftbutton.png";
 import buttonRight from "./assets/rightbutton.png";
+import HL from "./assets/HL.png";
+import HM from "./assets/HM.png";
+import HS from "./assets/HS.png";
+import AL from "./assets/AL.png";
+import AM from "./assets/AM.png";
+import AS from "./assets/AS.png";
+import BL from "./assets/BL.png";
+import BM from "./assets/BM.png";
+import BS from "./assets/BS.png";
 import CL from "./assets/CL.png";
 import CM from "./assets/CM.png";
 import CS from "./assets/CS.png";
+import DL from "./assets/DL.png";
+import DM from "./assets/DM.png";
+import DS from "./assets/DS.png";
+import SL from "./assets/SL.png";
+import SM from "./assets/SM.png";
+import SS from "./assets/SS.png";
+import X from "./assets/x2.png";
 const bagImages = {
+  H: { S: HS, M: HM, L: HL },
+  A: { S: AS, M: AM, L: AL },
+  B: { S: BS, M: BM, L: BL },
   C: { S: CS, M: CM, L: CL },
+  D: { S: DS, M: DM, L: DL },
+  S: { S: SS, M: SM, L: SL },
+  X: { S: X, M: X, L: X },
 };
 function App() {
   const [buttonsOpen, setButtonsOpen] = useState(true);
@@ -33,6 +55,35 @@ function App() {
 
   const handleRightClick = (e) => {
     e.stopPropagation();
+
+    setTackleNum(0);
+    setTimeout(() => {
+      setFly(true);
+      setTimeout(() => {
+        setFly(false);
+        setDrop(true);
+
+        const sizes = ["S", "M", "L"];
+        setBagSize(sizes[Math.floor(Math.random() * sizes.length)]);
+
+        if (category === "all") {
+          const rareChance = Math.random();
+          if (rareChance < 0.1) {
+            setBagType("X");
+          } else {
+            const types = ["H", "A", "B", "C", "D", "S"];
+            const randomType = types[Math.floor(Math.random() * types.length)];
+            setBagType(randomType);
+          }
+        } else {
+          setBagType(category);
+        }
+
+        setTimeout(() => {
+          setDrop(false);
+        }, 500);
+      }, 800);
+    }, 0);
   };
 
   const handleCategoryClick = (value, e) => {
@@ -66,6 +117,20 @@ function App() {
 
               const sizes = ["S", "M", "L"];
               setBagSize(sizes[Math.floor(Math.random() * sizes.length)]);
+
+              if (category === "all") {
+                const rareChance = Math.random();
+                if (rareChance < 0.1) {
+                  setBagType("X");
+                } else {
+                  const types = ["H", "A", "B", "C", "D", "S"];
+                  const randomType =
+                    types[Math.floor(Math.random() * types.length)];
+                  setBagType(randomType);
+                }
+              } else {
+                setBagType(category);
+              }
 
               setTimeout(() => {
                 setDrop(false);
