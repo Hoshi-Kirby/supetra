@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import uiUp from "./assets/up.png";
 import uiUp2 from "./assets/up2.png";
@@ -7,8 +7,10 @@ import uiDown2 from "./assets/down2.png";
 import buttonLeft from "./assets/leftbutton.png";
 import buttonRight from "./assets/rightbutton.png";
 import CL from "./assets/CL.png";
+import CM from "./assets/CM.png";
+import CS from "./assets/CS.png";
 const bagImages = {
-  C: { S: CL, M: CL, L: CL },
+  C: { S: CS, M: CM, L: CL },
 };
 function App() {
   const [buttonsOpen, setButtonsOpen] = useState(true);
@@ -49,14 +51,21 @@ function App() {
 
   const handleBackgroundClick = () => {
     if (buttonsOpen) {
-      if (!shake && !fly) {
-        if (tackleNum == 9) {
+      if (!shake && !fly && !drop) {
+        if (
+          (bagSize == "S" && tackleNum == 9) ||
+          (bagSize == "M" && tackleNum == 24) ||
+          (bagSize == "L" && tackleNum == 49)
+        ) {
           setTackleNum(0);
           setTimeout(() => {
             setFly(true);
             setTimeout(() => {
               setFly(false);
               setDrop(true);
+
+              const sizes = ["S", "M", "L"];
+              setBagSize(sizes[Math.floor(Math.random() * sizes.length)]);
 
               setTimeout(() => {
                 setDrop(false);
@@ -75,6 +84,15 @@ function App() {
       setButtonsOpen(true);
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      handleBackgroundClick();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <div className="game-container" onClick={handleBackgroundClick}>
