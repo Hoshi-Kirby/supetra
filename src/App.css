@@ -114,7 +114,7 @@ body {
 }
 
 .top-ui {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: auto;
   background-position: center;
@@ -270,6 +270,54 @@ body {
   }
 }
 
+.user-image-wrapper {
+  position: fixed;
+  top: 70%;
+  left: 35%;
+}
+.user-image {
+  position: absolute;
+
+  width: 25vh;
+  height: 25vh;
+  object-fit: contain;
+  object-position: left bottom;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.user-image-wrapper.hit {
+  animation: moveToBag 0.1s ease-out;
+}
+
+@keyframes moveToBag {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-20vw, -5vh);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.select-file {
+  display: none; /* input は隠す */
+}
+
+.file-button {
+  position: fixed;
+  top: 10%;
+  right: 10%;
+  padding: 2px 10px;
+  background: rgba(255, 255, 255, 0.578);
+  color: black;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
 @media (max-aspect-ratio: 1/1) {
   .right-button {
     width: 40vw;
@@ -287,6 +335,9 @@ body {
   .bag {
     top: 10%;
     left: 5%;
+  }
+  .user-image-wrapper {
+    left: 50%;
   }
 }
 

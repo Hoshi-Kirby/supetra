@@ -6,6 +6,7 @@ import uiDown from "./assets/down.png";
 import uiDown2 from "./assets/down2.png";
 import buttonLeft from "./assets/leftbutton.png";
 import buttonRight from "./assets/rightbutton.png";
+import defaultImg from "./assets/god.png";
 import HL from "./assets/HL.png";
 import HM from "./assets/HM.png";
 import HS from "./assets/HS.png";
@@ -43,6 +44,8 @@ function App() {
   const [fly, setFly] = useState(false);
   const [drop, setDrop] = useState(false);
   const [tackleNum, setTackleNum] = useState(0);
+  const [userImage, setUserImage] = useState(defaultImg);
+  const [hit, setHit] = useState(false);
 
   const handleLeftClick = (e) => {
     e.stopPropagation();
@@ -102,7 +105,7 @@ function App() {
 
   const handleBackgroundClick = () => {
     if (buttonsOpen) {
-      if (!shake && !fly && !drop) {
+      if (!shake && !fly && !drop && !hit) {
         if (
           (bagSize == "S" && tackleNum == 9) ||
           (bagSize == "M" && tackleNum == 24) ||
@@ -138,10 +141,17 @@ function App() {
             }, 800);
           }, 800);
         } else {
-          setTackleNum(tackleNum + 1);
+          setTackleNum((prev) => prev + 1);
+
+          setHit(true);
+
           setTimeout(() => {
             setShake(true);
             setTimeout(() => setShake(false), 300);
+          }, 50);
+
+          setTimeout(() => {
+            setHit(false);
           }, 100);
         }
       }
@@ -149,15 +159,30 @@ function App() {
       setButtonsOpen(true);
     }
   };
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+    setUserImage(url);
+  };
 
   useEffect(() => {
+    let keyLocked = false;
     const handleKeyDown = (e) => {
+      if (keyLocked) return;
+      keyLocked = true;
+
       handleBackgroundClick();
+
+      setTimeout(() => {
+        keyLocked = false;
+      }, 350); // 0.1秒だけロック
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [buttonsOpen, shake, fly, drop, tackleNum, bagSize, category]);
 
   return (
     <div className="game-container" onClick={handleBackgroundClick}>
@@ -169,6 +194,19 @@ function App() {
         src={bagImages[bagType][bagSize]}
         className={`bag ${shake ? "shake" : ""} ${fly ? "fly" : ""} ${drop ? "drop" : ""}`}
       />
+      <div className={`user-image-wrapper ${hit ? "hit" : ""}`}>
+        <img src={userImage} className="user-image" />
+      </div>
+
+      <label className="file-button">
+        画像を選ぶ
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          className="select-file"
+        />
+      </label>
 
       <img src={uiUp} className="top-ui landscape" />
       <img src={uiUp2} className="top-ui portrait" />
