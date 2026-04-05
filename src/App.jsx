@@ -46,6 +46,7 @@ function App() {
   const [tackleNum, setTackleNum] = useState(0);
   const [userImage, setUserImage] = useState(defaultImg);
   const [hit, setHit] = useState(false);
+  const [finalHit, setFinalHit] = useState(false);
 
   const handleLeftClick = (e) => {
     e.stopPropagation();
@@ -112,6 +113,7 @@ function App() {
           (bagSize == "L" && tackleNum == 49)
         ) {
           setTackleNum(0);
+          setFinalHit(true);
           setTimeout(() => {
             setFly(true);
             setTimeout(() => {
@@ -140,6 +142,10 @@ function App() {
               }, 500);
             }, 800);
           }, 800);
+
+          setTimeout(() => {
+            setFinalHit(false);
+          }, 1600);
         } else {
           setTackleNum((prev) => prev + 1);
 
@@ -194,7 +200,11 @@ function App() {
         src={bagImages[bagType][bagSize]}
         className={`bag ${shake ? "shake" : ""} ${fly ? "fly" : ""} ${drop ? "drop" : ""}`}
       />
-      <div className={`user-image-wrapper ${hit ? "hit" : ""}`}>
+      <div
+        className={`user-image-wrapper 
+                 ${hit ? "hit" : ""} 
+                 ${finalHit ? "final-hit" : ""}`}
+      >
         <img src={userImage} className="user-image" />
       </div>
 

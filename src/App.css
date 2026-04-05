@@ -270,10 +270,28 @@ body {
   }
 }
 
+.select-file {
+  display: none; /* input は隠す */
+}
+
+.file-button {
+  position: fixed;
+  top: 10%;
+  right: 10%;
+  padding: 2px 10px;
+  background: rgba(255, 255, 255, 0.578);
+  color: black;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
 .user-image-wrapper {
   position: fixed;
-  top: 70%;
+  top: 45%;
   left: 35%;
+  width: 25vh;
+  height: 25vh;
 }
 .user-image {
   position: absolute;
@@ -301,21 +319,27 @@ body {
     transform: translate(0, 0);
   }
 }
-
-.select-file {
-  display: none; /* input は隠す */
+.user-image-wrapper.final-hit {
+  transform-origin: center center;
+  animation: spinAttack 1.6s ease-out forwards;
 }
 
-.file-button {
-  position: fixed;
-  top: 10%;
-  right: 10%;
-  padding: 2px 10px;
-  background: rgba(255, 255, 255, 0.578);
-  color: black;
-  border-radius: 4px;
-  cursor: pointer;
-  z-index: 9999;
+@keyframes spinAttack {
+  0% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(1350deg) translate(0vw, 0vh);
+  }
+  50% {
+    transform: rotate(1350deg) translate(0vw, -30vh);
+  }
+  80% {
+    transform: rotate(1350deg) translate(0vw, -30vh);
+  }
+  100% {
+    transform: rotate(1440deg) translate(0vw, 0vh);
+  }
 }
 
 @media (max-aspect-ratio: 1/1) {
