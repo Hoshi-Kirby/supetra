@@ -7,6 +7,7 @@ import uiDown2 from "./assets/down2.png";
 import buttonLeft from "./assets/leftbutton.png";
 import buttonRight from "./assets/rightbutton.png";
 import defaultImg from "./assets/god.png";
+import exM from "./assets/exMark.png";
 import HL from "./assets/HL.png";
 import HM from "./assets/HM.png";
 import HS from "./assets/HS.png";
@@ -38,15 +39,38 @@ const bagImages = {
 function App() {
   const [buttonsOpen, setButtonsOpen] = useState(true);
   const [category, setCategory] = useState("all");
-  const [bagType, setBagType] = useState("C");
-  const [bagSize, setBagSize] = useState("L");
+  const [bagType, setBagType] = useState("X");
+  const [bagSize, setBagSize] = useState("S");
   const [shake, setShake] = useState(false);
   const [fly, setFly] = useState(false);
   const [drop, setDrop] = useState(false);
   const [tackleNum, setTackleNum] = useState(0);
   const [userImage, setUserImage] = useState(defaultImg);
+  const [imageName, setImageName] = useState("ハバタクカミ");
   const [hit, setHit] = useState(false);
   const [finalHit, setFinalHit] = useState(0);
+  const [finalShake, setFinalShake] = useState(0);
+  const idle =
+    !shake &&
+    !fly &&
+    !drop &&
+    !hit &&
+    finalHit === 0 &&
+    !(
+      (bagSize == "S" && tackleNum == 9) ||
+      (bagSize == "M" && tackleNum == 24) ||
+      (bagSize == "L" && tackleNum == 49)
+    );
+
+  const idleLast =
+    !shake &&
+    !fly &&
+    !drop &&
+    !hit &&
+    finalHit === 0 &&
+    ((bagSize == "S" && tackleNum == 9) ||
+      (bagSize == "M" && tackleNum == 24) ||
+      (bagSize == "L" && tackleNum == 49));
 
   const handleLeftClick = (e) => {
     e.stopPropagation();
@@ -60,8 +84,8 @@ function App() {
   const handleRightClick = (e) => {
     e.stopPropagation();
 
-    setTackleNum(0);
-    setTimeout(() => {
+    if (!shake && !fly && !drop && !hit && finalHit == 0) {
+      setTackleNum(0);
       setFly(true);
       setTimeout(() => {
         setFly(false);
@@ -86,8 +110,8 @@ function App() {
         setTimeout(() => {
           setDrop(false);
         }, 500);
-      }, 800);
-    }, 0);
+      }, 100);
+    }
   };
 
   const handleCategoryClick = (value, e) => {
@@ -106,15 +130,22 @@ function App() {
 
   const handleBackgroundClick = () => {
     if (buttonsOpen) {
-      if (!shake && !fly && !drop && !hit) {
+      if (!shake && !fly && !drop && !hit && finalHit == 0) {
         if (
           (bagSize == "S" && tackleNum == 9) ||
           (bagSize == "M" && tackleNum == 24) ||
           (bagSize == "L" && tackleNum == 49)
         ) {
           setTackleNum(0);
-          setFinalHit(1);
+          const rand = Math.random() < 0.5 ? 1 : 2;
+          setFinalHit(rand);
+
+          // ★ finalHit=2 のときだけ finalShake を true
+          if (rand === 2) {
+            setFinalShake(true);
+          }
           setTimeout(() => {
+            setFinalShake(false);
             setFly(true);
             setTimeout(() => {
               setFly(false);
@@ -171,6 +202,7 @@ function App() {
 
     const url = URL.createObjectURL(file);
     setUserImage(url);
+    setImageName(file.name.replace(/\.[^/.]+$/, ""));
   };
 
   useEffect(() => {
@@ -198,21 +230,25 @@ function App() {
 
       <img
         src={bagImages[bagType][bagSize]}
-        className={`bag ${shake ? "shake" : ""} ${fly ? "fly" : ""} ${drop ? "drop" : ""}`}
+        className={`bag ${shake ? "shake" : ""} ${finalShake ? "final-shake" : ""} ${fly ? "fly" : ""} ${drop ? "drop" : ""}`}
       />
       <div
         className={`user-image-wrapper 
-                 ${hit ? "hit" : ""} 
+                 ${hit ? "hit" : ""}  
                  ${finalHit == 1 ? "final-hit1" : ""}
-                 ${finalHit == 2 ? "final-hit2" : ""}`}
+                 ${finalHit == 2 ? "final-hit2" : ""}
+                 ${idle ? "idle" : ""}
+                 ${idleLast ? "idle-last" : ""}`}
       >
         <img
           src={userImage}
           className={`user-image 
                  ${finalHit == 1 ? "final-hit1" : ""}
-                 ${finalHit == 2 ? "final-hit2" : ""}`}
+                 ${finalHit == 2 ? "final-hit2" : ""}
+                 ${idleLast ? "idle-last-tilt" : ""}`}
         />
       </div>
+      {idleLast && <img src={exM} className="ex-mark" />}
 
       <label className="file-button">
         画像を選ぶ
@@ -226,6 +262,8 @@ function App() {
 
       <img src={uiUp} className="top-ui landscape" />
       <img src={uiUp2} className="top-ui portrait" />
+
+      <div className="pokemon-name">{imageName}</div>
 
       <div className="bottom-ui-wrapper">
         <img src={uiDown} className="bottom-ui landscape" />

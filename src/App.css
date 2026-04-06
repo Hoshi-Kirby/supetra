@@ -137,6 +137,24 @@ body {
   background-size: 100% auto;
 }
 
+.pokemon-name {
+  position: fixed;
+  top: 1vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 4vw;
+  font-weight: 700;
+  color: #fff;
+  pointer-events: none;
+  z-index: 50;
+
+  max-width: 40vw; /* ← 横幅の上限（調整OK） */
+  white-space: nowrap; /* 改行しない */
+  overflow: hidden; /* はみ出した部分を隠す */
+  text-overflow: ellipsis; /* 「…」で省略 */
+  text-align: center;
+}
+
 .button-wrapper .left-button-wrapper,
 .button-wrapper .right-button {
   transition: transform 0.3s ease;
@@ -389,7 +407,316 @@ body {
   }
 }
 
+.bag.final-shake {
+  animation: finalSwing 1.23s ease-out;
+}
+.user-image.final-hit2 {
+  transform-origin: center center;
+  animation: fh2-image 2.1s linear forwards;
+}
+.user-image-wrapper.final-hit2 {
+  animation: fh2-wrapper 2.1s ease-out forwards;
+}
+
+@keyframes finalSwing {
+  /* 0.00〜0.38：揺れない */
+  0% {
+    transform: rotate(0deg);
+  }
+  30.9% {
+    /* 0.38 / 1.23 */
+    transform: rotate(0deg);
+  }
+
+  /* ここから 4 往復（8 回切り替え） */
+  /* 片道 0.10625s → 0.10625 / 1.23 = 8.64% */
+
+  /* 1回目：左 */
+  39.5% {
+    transform: rotate(-8deg); /* 角度は調整してOK */
+  }
+  /* 1回目：右 */
+  48.1% {
+    transform: rotate(10deg);
+  }
+
+  /* 2回目：左 */
+  56.7% {
+    transform: rotate(-15deg);
+  }
+  /* 2回目：右 */
+  65.3% {
+    transform: rotate(15deg);
+  }
+
+  /* 3回目：左 */
+  73.9% {
+    transform: rotate(-20deg);
+  }
+  /* 3回目：右 */
+  82.5% {
+    transform: rotate(20deg);
+  }
+
+  /* 4回目：左 */
+  91.1% {
+    transform: rotate(-20deg);
+  }
+  /* 4回目：右 */
+  99.7% {
+    transform: rotate(25deg);
+  }
+
+  /* 最後：飛ぶアニメーションにつなぐために 0deg に戻す */
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes fh2-image {
+  0% {
+    transform: rotate(0deg);
+  }
+  15.2% {
+    transform: rotate(-10deg);
+  }
+  40.4% {
+    transform: rotate(-360deg);
+  }
+
+  50.4% {
+    transform: rotate(-360deg);
+  }
+  71.9% {
+    transform: rotate(0deg);
+  }
+  85.2% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes fh2-wrapper {
+  /* 0.00：初期位置 */
+  0% {
+    transform: translate(0, 0);
+  }
+
+  /* 0.32：少し後ろに引く */
+  15.2% {
+    /* 0.32 / 2.10 */
+    transform: translate(5vw, 0);
+  }
+
+  /* 0.43：サンドバッグ左（-20vw） */
+  20.4% {
+    transform: translate(-40vw, -10vh);
+  }
+
+  /* 0.52：右上（+20vw, -10vw） */
+  24.7% {
+    transform: translate(-15vw, -20vh);
+  }
+
+  /* 0.65：左（-20vw） */
+  31% {
+    transform: translate(-40vw, -10vh);
+  }
+
+  /* 0.74：右（+20vw） */
+  35.2% {
+    transform: translate(-15vw, -10vh);
+  }
+
+  /* 0.85：左（-20vw, +10vw） */
+  40.4% {
+    transform: translate(-40vw, -10vh);
+  }
+
+  /* 0.93：右下（+20vw, +10vw） */
+  44.2% {
+    transform: translate(-15vw, 0vh);
+  }
+
+  /* 1.06：左（-20vw） */
+  50.4% {
+    transform: translate(-40vw, -10vh);
+  }
+
+  /* 1.14：右上（+20vw, -10vw） */
+  54.2% {
+    transform: translate(-15vw, -20vh);
+  }
+
+  /* 1.28：左（-20vw） */
+  61% {
+    transform: translate(-40vw, -10vh);
+  }
+
+  /* 1.37：右上（+20vw, -10vw） */
+  65.2% {
+    transform: translate(-15vw, -20vh);
+  }
+
+  /* 1.51：真ん中（0,0）→ サンドバッグ回転開始 */
+  71.9% {
+    transform: translate(-20vw, -10vh);
+  }
+  78.0% {
+    transform: translate(-16vw, -23vh);
+  }
+
+  /* 1.79：ジャンプ頂点（0, -15vw） */
+  85.2% {
+    transform: translate(-10vw, -30vh);
+  }
+  90.0% {
+    transform: translate(-4vw, -23vh);
+  }
+
+  /* 2.01：着地（0, 0） */
+  95.7% {
+    transform: translate(0, 0);
+  }
+
+  /* 2.10：静止 */
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.idle {
+  animation: idleMotion 3.33s linear infinite;
+}
+
+@keyframes idleMotion {
+  /* 0%：右へ（7.40〜7.75） */
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  10.5% {
+    transform: translate(2vw, -0.2vh) rotate(10deg);
+  }
+
+  /* 中央へ（7.75〜8.08） */
+  20.4% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  /* 左へ（8.08〜8.43） */
+  31% {
+    transform: translate(-2vw, -0.2vh) rotate(-10deg);
+  }
+
+  /* 中央へ（8.43〜8.76） */
+  41.4% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  /* 静止（8.76〜9.36） */
+  59.4% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  /* ジャンプ1（9.36〜9.73） */
+  69.7% {
+    transform: translateY(-1vw);
+  }
+  79.3% {
+    transform: translateY(0);
+  }
+
+  /* ジャンプ2（9.73〜10.11） */
+  88.8% {
+    transform: translateY(-1vw);
+  }
+  98.5% {
+    transform: translateY(0);
+  }
+
+  /* 静止（10.11〜10.73） */
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+.idle-last {
+  animation: idleLast 1.62s linear infinite;
+}
+
+.idle-last-tilt {
+  animation: idleLastTilt 1.62s linear infinite;
+}
+
+@keyframes idleLast {
+  /* --- 大ジャンプ（Y軸） --- */
+
+  0% {
+    transform: translateY(0);
+  }
+
+  /* 大ジャンプ頂点 */
+  18.5% {
+    transform: translateY(-10vh);
+  }
+
+  /* 着地（小ジャンプ開始） */
+  38.2% {
+    transform: translateY(0);
+  }
+
+  /* 小ジャンプ頂点 */
+  43.2% {
+    transform: translateY(-2.5vh);
+  }
+
+  /* 小ジャンプ着地 */
+  46.3% {
+    transform: translateY(0);
+  }
+
+  /* 待機 */
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes idleLastTilt {
+  7.4% {
+    transform: rotate(0deg);
+  }
+  13.4% {
+    transform: rotate(10deg);
+  }
+
+  18.5% {
+    transform: rotate(0deg);
+  }
+
+  23.5% {
+    transform: rotate(-10deg);
+  }
+  29.7% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.ex-mark {
+  position: fixed;
+  top: 45vh;
+  left: 45vw;
+  width: 6vw;
+}
+
 @media (max-aspect-ratio: 1/1) {
+  .pokemon-name {
+    font-size: 8vw;
+    max-width: 85vw;
+  }
   .right-button {
     width: 40vw;
   }
@@ -409,6 +736,11 @@ body {
   }
   .user-image-wrapper {
     left: 50%;
+  }
+  .ex-mark {
+    top: 45vh;
+    left: 80vw;
+    width: 16vw;
   }
 }
 
