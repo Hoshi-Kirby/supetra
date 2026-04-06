@@ -243,7 +243,7 @@ body {
 }
 
 .bag.fly {
-  animation: flyAway 0.8s ease-out forwards;
+  animation: flyAway 0.87s ease-out forwards;
   transform-origin: 50% 0%;
 }
 
@@ -252,8 +252,7 @@ body {
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(540deg);
-    opacity: 0;
+    transform: rotate(1260deg);
   }
 }
 
@@ -319,26 +318,74 @@ body {
     transform: translate(0, 0);
   }
 }
-.user-image-wrapper.final-hit {
+.user-image.final-hit1 {
   transform-origin: center center;
-  animation: spinAttack 1.6s ease-out forwards;
+  animation: spinAttackSpin 2.1s ease-out forwards;
 }
 
-@keyframes spinAttack {
+.user-image-wrapper.final-hit1 {
+  transform-origin: center center;
+  animation: spinAttack 2.1s ease-out forwards;
+}
+
+@keyframes spinAttackSpin {
   0% {
     transform: rotate(0deg);
   }
-  40% {
-    transform: rotate(1350deg) translate(0vw, 0vh);
+  8.5% {
+    transform: rotate(90deg);
   }
-  50% {
-    transform: rotate(1350deg) translate(0vw, -30vh);
+  52% {
+    transform: rotate(1395deg);
   }
-  80% {
-    transform: rotate(1350deg) translate(0vw, -30vh);
+  58.5% {
+    transform: rotate(1350deg);
+  }
+  78% {
+    transform: rotate(1350deg);
   }
   100% {
-    transform: rotate(1440deg) translate(0vw, 0vh);
+    transform: rotate(1440deg);
+  }
+}
+
+@keyframes spinAttack {
+  /* 0.00〜0.18：飛び上がり */
+  0% {
+    transform: translateY(0);
+  }
+  8.5% {
+    /* 0.18 / 2.10 ≒ 8.5% */
+    transform: translate(20vw, -15vh);
+  }
+
+  /* 0.18〜1.09：空中で回転中（位置は維持） */
+  52% {
+    /* 1.09 / 2.10 ≒ 52% */
+    transform: translate(20vw, -15vh);
+  }
+
+  /* 1.09〜1.23：突撃 */
+  58.5% {
+    /* 1.23 / 2.10 ≒ 58.5% */
+    transform: translate(-20vw, -15vh); /* ←突撃距離は調整 */
+  }
+  59.5% {
+    transform: translate(-18vw, -15vh);
+  }
+  60.5% {
+    transform: translate(-20vw, -15vh);
+  }
+
+  /* 1.23〜1.64：静止 */
+  78% {
+    /* 1.64 / 2.10 ≒ 78% */
+    transform: translate(-20vw, -15vh);
+  }
+
+  /* 1.64〜2.10：元の位置へ戻る */
+  100% {
+    transform: translate(0, 0);
   }
 }
 

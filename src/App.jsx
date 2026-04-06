@@ -46,7 +46,7 @@ function App() {
   const [tackleNum, setTackleNum] = useState(0);
   const [userImage, setUserImage] = useState(defaultImg);
   const [hit, setHit] = useState(false);
-  const [finalHit, setFinalHit] = useState(false);
+  const [finalHit, setFinalHit] = useState(0);
 
   const handleLeftClick = (e) => {
     e.stopPropagation();
@@ -113,7 +113,7 @@ function App() {
           (bagSize == "L" && tackleNum == 49)
         ) {
           setTackleNum(0);
-          setFinalHit(true);
+          setFinalHit(1);
           setTimeout(() => {
             setFly(true);
             setTimeout(() => {
@@ -141,11 +141,11 @@ function App() {
                 setDrop(false);
               }, 500);
             }, 800);
-          }, 800);
+          }, 1230);
 
           setTimeout(() => {
-            setFinalHit(false);
-          }, 1600);
+            setFinalHit(0);
+          }, 2100);
         } else {
           setTackleNum((prev) => prev + 1);
 
@@ -203,9 +203,15 @@ function App() {
       <div
         className={`user-image-wrapper 
                  ${hit ? "hit" : ""} 
-                 ${finalHit ? "final-hit" : ""}`}
+                 ${finalHit == 1 ? "final-hit1" : ""}
+                 ${finalHit == 2 ? "final-hit2" : ""}`}
       >
-        <img src={userImage} className="user-image" />
+        <img
+          src={userImage}
+          className={`user-image 
+                 ${finalHit == 1 ? "final-hit1" : ""}
+                 ${finalHit == 2 ? "final-hit2" : ""}`}
+        />
       </div>
 
       <label className="file-button">
