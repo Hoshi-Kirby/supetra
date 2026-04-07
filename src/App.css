@@ -56,6 +56,9 @@ body {
   height: 100%;
   overflow: hidden; /* ← スクロール禁止 */
 }
+body {
+  touch-action: manipulation;
+}
 
 .game-container {
   position: relative;
@@ -320,8 +323,6 @@ body {
   object-fit: contain;
   object-position: left bottom;
   position: absolute;
-  left: 0;
-  bottom: 0;
 }
 .user-image-wrapper.hit {
   animation: moveToBag 0.1s ease-out;
@@ -588,6 +589,7 @@ body {
   }
 }
 .idle {
+  transform-origin: center center;
   animation: idleMotion 3.33s linear infinite;
 }
 
@@ -647,6 +649,7 @@ body {
 }
 
 .idle-last-tilt {
+  transform-origin: center center;
   animation: idleLastTilt 1.62s linear infinite;
 }
 
@@ -720,6 +723,21 @@ body {
   left: 55vw;
   transform: translate(0%, -50%);
   width: 60vh;
+}
+.hex-meter {
+  position: fixed;
+  top: 49.6vh;
+  left: 55.2vw;
+  transform: translate(0%, -50%);
+  width: 60vh;
+}
+.hex-fill {
+  fill: rgb(217, 255, 0);
+  transition: all 0.25s ease-out;
+}
+.hex-bg {
+  fill: #11c193;
+  transition: all 0.25s ease-out;
 }
 
 .gauge {

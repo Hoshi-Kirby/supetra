@@ -133,6 +133,28 @@ function App() {
     }
   };
 
+  const angles = [270, 330, 30, 90, 150, 210];
+  const keys = ["H", "A", "B", "S", "D", "C"];
+
+  const points = angles.map((deg, i) => {
+    const key = keys[i];
+    const ratio = ev[key] / 252;
+    const r = 10 + 90 * ratio;
+    const rad = (deg * Math.PI) / 180;
+
+    return [r * Math.cos(rad), r * Math.sin(rad)];
+  });
+
+  const pointString = points.map((p) => p.join(",")).join(" ");
+  const bgPoints = `
+  0,-9
+  7.794,-4.5
+  7.794,4.5
+  0,9
+  -7.794,4.5
+  -7.794,-4.5
+`;
+
   const handleRightClick = (e) => {
     e.stopPropagation();
 
@@ -330,6 +352,11 @@ function App() {
         />
       </div>
       <img src={he} className="he landscape" />
+      <svg className="hex-meter landscape" viewBox="-100 -100 200 200">
+        <polygon points={pointString} className="hex-fill" />
+        <polygon points={bgPoints} className="hex-bg" />
+      </svg>
+
       <div className="gauge">
         {isSerectTag ? (
           <>
