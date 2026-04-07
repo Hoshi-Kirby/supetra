@@ -4,6 +4,8 @@ import uiUp from "./assets/up.png";
 import uiUp2 from "./assets/up2.png";
 import uiDown from "./assets/down.png";
 import uiDown2 from "./assets/down2.png";
+import he from "./assets/he.png";
+import gauge from "./assets/gauge.png";
 import buttonLeft from "./assets/leftbutton.png";
 import buttonRight from "./assets/rightbutton.png";
 import defaultImg from "./assets/god.png";
@@ -37,6 +39,9 @@ const bagImages = {
   X: { S: X, M: X, L: X },
 };
 function App() {
+  const [isPortrait, setIsPortrait] = useState(
+    window.innerHeight > window.innerWidth,
+  );
   const [buttonsOpen, setButtonsOpen] = useState(true);
   const [category, setCategory] = useState("all");
   const [bagType, setBagType] = useState("X");
@@ -45,11 +50,23 @@ function App() {
   const [fly, setFly] = useState(false);
   const [drop, setDrop] = useState(false);
   const [tackleNum, setTackleNum] = useState(0);
+  const [] = useState(0);
   const [userImage, setUserImage] = useState(defaultImg);
   const [imageName, setImageName] = useState("ハバタクカミ");
   const [hit, setHit] = useState(false);
   const [finalHit, setFinalHit] = useState(0);
   const [finalShake, setFinalShake] = useState(0);
+  const [isSerectTag, setIsSerectTag] = useState(false);
+  const [tag, setTag] = useState("合計");
+  const [ev, setEv] = useState({
+    H: 0,
+    A: 0,
+    B: 0,
+    C: 0,
+    D: 0,
+    S: 0,
+    total: 0,
+  });
   const idle =
     !shake &&
     !fly &&
@@ -71,6 +88,41 @@ function App() {
     ((bagSize == "S" && tackleNum == 9) ||
       (bagSize == "M" && tackleNum == 24) ||
       (bagSize == "L" && tackleNum == 49));
+  const tagToKey = {
+    合計: "total",
+    HP: "H",
+    攻撃: "A",
+    防御: "B",
+    特攻: "C",
+    特防: "D",
+    素早さ: "S",
+  };
+  const key = tagToKey[tag];
+
+  const maxValue = !isPortrait ? 510 : tag === "合計" ? 510 : 252;
+
+  const percentage = (ev[key] / maxValue) * 100;
+
+  const getColorClass = (value) => {
+    switch (value) {
+      case "HP":
+        return "color-hp";
+      case "攻撃":
+        return "color-atk";
+      case "防御":
+        return "color-def";
+      case "特攻":
+        return "color-spa";
+      case "特防":
+        return "color-spd";
+      case "素早さ":
+        return "color-spe";
+      default:
+        return "";
+    }
+  };
+  const addValue =
+    bagSize === "S" ? 1 : bagSize === "M" ? 4 : bagSize === "L" ? 12 : 0;
 
   const handleLeftClick = (e) => {
     e.stopPropagation();
@@ -129,7 +181,7 @@ function App() {
   };
 
   const handleBackgroundClick = () => {
-    if (buttonsOpen) {
+    if (buttonsOpen && !isSerectTag) {
       if (!shake && !fly && !drop && !hit && finalHit == 0) {
         if (
           (bagSize == "S" && tackleNum == 9) ||
@@ -140,7 +192,6 @@ function App() {
           const rand = Math.random() < 0.5 ? 1 : 2;
           setFinalHit(rand);
 
-          // ★ finalHit=2 のときだけ finalShake を true
           if (rand === 2) {
             setFinalShake(true);
           }
@@ -150,6 +201,17 @@ function App() {
             setTimeout(() => {
               setFly(false);
               setDrop(true);
+              setEv((prev) => {
+                if (bagType === "X") {
+                  return prev;
+                }
+
+                return {
+                  ...prev,
+                  [bagType]: prev[bagType] + addValue,
+                  total: prev.total + addValue,
+                };
+              });
 
               const sizes = ["S", "M", "L"];
               setBagSize(sizes[Math.floor(Math.random() * sizes.length)]);
@@ -194,7 +256,17 @@ function App() {
       }
     } else {
       setButtonsOpen(true);
+      setIsSerectTag(false);
     }
+  };
+  const clickTag = (e) => {
+    e.stopPropagation();
+    setIsSerectTag(true);
+  };
+  const handleTagClick = (value, e) => {
+    e.stopPropagation();
+    setTag(value);
+    setIsSerectTag(false);
   };
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -204,6 +276,15 @@ function App() {
     setUserImage(url);
     setImageName(file.name.replace(/\.[^/.]+$/, ""));
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPortrait(window.innerHeight > window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     let keyLocked = false;
@@ -247,6 +328,65 @@ function App() {
                  ${finalHit == 2 ? "final-hit2" : ""}
                  ${idleLast ? "idle-last-tilt" : ""}`}
         />
+      </div>
+      <img src={he} className="he landscape" />
+      <div className="gauge">
+        {isSerectTag ? (
+          <>
+            <div
+              className="tag tag1 portrait"
+              onClick={(e) => handleTagClick("合計", e)}
+            >
+              合計
+            </div>
+            <div
+              className="tag tag2 color-hp portrait"
+              onClick={(e) => handleTagClick("HP", e)}
+            >
+              HP
+            </div>
+            <div
+              className="tag tag3 color-atk portrait"
+              onClick={(e) => handleTagClick("攻撃", e)}
+            >
+              攻撃
+            </div>
+            <div
+              className="tag tag4 color-def portrait"
+              onClick={(e) => handleTagClick("防御", e)}
+            >
+              防御
+            </div>
+            <div
+              className="tag tag5 color-spa portrait"
+              onClick={(e) => handleTagClick("特攻", e)}
+            >
+              特攻
+            </div>
+            <div
+              className="tag tag6 color-spd portrait"
+              onClick={(e) => handleTagClick("特防", e)}
+            >
+              特防
+            </div>
+            <div
+              className="tag tag7 color-spe portrait"
+              onClick={(e) => handleTagClick("素早さ", e)}
+            >
+              素早さ
+            </div>
+          </>
+        ) : (
+          <div
+            className={`tag tag1 portrait ${getColorClass(tag)}`}
+            onClick={clickTag}
+          >
+            {tag}
+          </div>
+        )}
+        <img src={gauge} className="frame" />
+
+        <div className="bar" style={{ height: `${percentage}%` }} />
       </div>
       {idleLast && <img src={exM} className="ex-mark" />}
 

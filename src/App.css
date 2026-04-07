@@ -119,6 +119,7 @@ body {
   height: auto;
   background-position: center;
   background-size: 100% auto;
+  pointer-events: none;
 }
 
 .bottom-ui-wrapper {
@@ -126,6 +127,7 @@ body {
   width: 100%;
   height: auto;
   bottom: 0;
+  pointer-events: none;
 }
 
 .bottom-ui {
@@ -135,6 +137,7 @@ body {
   bottom: 0;
   background-position: center;
   background-size: 100% auto;
+  pointer-events: none;
 }
 
 .pokemon-name {
@@ -146,7 +149,6 @@ body {
   font-weight: 700;
   color: #fff;
   pointer-events: none;
-  z-index: 50;
 
   max-width: 40vw; /* ← 横幅の上限（調整OK） */
   white-space: nowrap; /* 改行しない */
@@ -162,7 +164,7 @@ body {
 
 /* 左右の通常位置 */
 .right-button {
-  width: 20vw;
+  width: 16vw;
   height: auto;
   position: absolute;
   bottom: 0;
@@ -293,7 +295,7 @@ body {
 
 .file-button {
   position: fixed;
-  top: 10%;
+  top: 5vw;
   right: 10%;
   padding: 2px 10px;
   background: rgba(255, 255, 255, 0.578);
@@ -712,6 +714,91 @@ body {
   width: 6vw;
 }
 
+.he {
+  position: fixed;
+  top: 50vh;
+  left: 55vw;
+  transform: translate(0%, -50%);
+  width: 60vh;
+}
+
+.gauge {
+  position: fixed;
+  top: 5vh;
+  right: 2vw;
+  width: max(0px, calc((94vh - 15vw) * 13 / 190));
+  height: max(0px, calc(94vh - 15vw));
+}
+
+.bar {
+  position: absolute;
+  bottom: calc((94vh - 15vw) * 3 / 190);
+  left: calc((94vh - 15vw) * 3.1 / 190);
+  width: calc(100% - (94vh - 15vw) * 6.2 / 190);
+  background-color: #a8f40fac;
+}
+
+.frame {
+  image-rendering: pixelated;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* クリック邪魔しない */
+}
+
+.tag {
+  position: absolute;
+  left: 0px;
+  transform: translateX(-100%);
+  color: white;
+  width: max(0px, calc((80vh - 30vw) * 27 / 190));
+  padding: 0px max(0px, calc((80vh - 30vw) * 7 / 190));
+  font-size: max(0px, calc((80vh - 30vw) * 10 / 190));
+  background: #000000a7;
+}
+.tag1 {
+  top: 0px;
+}
+.tag2 {
+  top: 10%;
+}
+.tag3 {
+  top: 20%;
+}
+.tag4 {
+  top: 30%;
+}
+.tag5 {
+  top: 40%;
+}
+.tag6 {
+  top: 50%;
+}
+.tag7 {
+  top: 60%;
+}
+/* 色だけのクラス */
+.color-hp {
+  color: #8cff00;
+}
+.color-atk {
+  color: #f5d66b;
+}
+.color-def {
+  color: #ff9900;
+}
+.color-spa {
+  color: #00e5ff;
+}
+.color-spd {
+  color: #0077ff;
+}
+.color-spe {
+  color: #aa0dd1;
+}
+
 @media (max-aspect-ratio: 1/1) {
   .pokemon-name {
     font-size: 8vw;
@@ -741,6 +828,17 @@ body {
     top: 45vh;
     left: 80vw;
     width: 16vw;
+  }
+  .gauge {
+    top: 20vw;
+    right: 4vh;
+    width: max(0px, calc((80vh - 30vw) * 13 / 190));
+    height: max(0px, calc(80vh - 30vw));
+  }
+  .bar {
+    bottom: calc((80vh - 30vw) * 3 / 190);
+    left: calc((80vh - 30vw) * 3.1 / 190);
+    width: calc(100% - (80vh - 30vw) * 6.2 / 190);
   }
 }
 
