@@ -10,6 +10,7 @@ import buttonLeft from "./assets/leftbutton.png";
 import buttonRight from "./assets/rightbutton.png";
 import defaultImg from "./assets/god.png";
 import exM from "./assets/exMark.png";
+import hado from "./assets/hado.png";
 import HL from "./assets/HL.png";
 import HM from "./assets/HM.png";
 import HS from "./assets/HS.png";
@@ -50,7 +51,7 @@ function App() {
   const [fly, setFly] = useState(false);
   const [drop, setDrop] = useState(false);
   const [tackleNum, setTackleNum] = useState(0);
-  const [] = useState(0);
+  const [lastX, setLastX] = useState(false);
   const [userImage, setUserImage] = useState(defaultImg);
   const [imageName, setImageName] = useState("ハバタクカミ");
   const [hit, setHit] = useState(false);
@@ -121,8 +122,10 @@ function App() {
         return "";
     }
   };
-  const addValue =
+  const baseValue =
     bagSize === "S" ? 1 : bagSize === "M" ? 4 : bagSize === "L" ? 12 : 0;
+
+  const addValue = lastX ? baseValue * 2 : baseValue;
 
   const handleLeftClick = (e) => {
     e.stopPropagation();
@@ -160,6 +163,7 @@ function App() {
 
     if (!shake && !fly && !drop && !hit && finalHit == 0) {
       setTackleNum(0);
+      setLastX(false);
       setFly(true);
       setTimeout(() => {
         setFly(false);
@@ -234,6 +238,12 @@ function App() {
                   total: prev.total + addValue,
                 };
               });
+
+              if (bagType === "X") {
+                setLastX(true);
+              } else {
+                setLastX(false);
+              }
 
               const sizes = ["S", "M", "L"];
               setBagSize(sizes[Math.floor(Math.random() * sizes.length)]);
@@ -335,6 +345,9 @@ function App() {
         src={bagImages[bagType][bagSize]}
         className={`bag ${shake ? "shake" : ""} ${finalShake ? "final-shake" : ""} ${fly ? "fly" : ""} ${drop ? "drop" : ""}`}
       />
+      <img src={hado} className={`hado1 ${shake ? "shake1" : ""}`} />
+      <img src={hado} className={`hado2 ${shake ? "shake2" : ""}`} />
+      <img src={hado} className={`hado3 ${shake ? "shake3" : ""}`} />
       <div
         className={`user-image-wrapper 
                  ${hit ? "hit" : ""}  
