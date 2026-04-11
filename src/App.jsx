@@ -215,12 +215,12 @@ function App() {
           (bagSize == "L" && tackleNum == 49)
         ) {
           setTackleNum(0);
-          const rand = Math.random() < 0.5 ? 1 : 2;
-          setFinalHit(rand);
+          const rand = Math.floor(Math.random() * 3) + 1;
 
-          if (rand === 2) {
-            setFinalShake(true);
-          }
+          setFinalHit(rand);
+          setFinalShake(rand);
+
+          const waitTime = rand === 3 ? 500 : 1230;
           setTimeout(() => {
             setFinalShake(false);
             setFly(true);
@@ -266,7 +266,7 @@ function App() {
                 setDrop(false);
               }, 500);
             }, 800);
-          }, 1230);
+          }, waitTime);
 
           setTimeout(() => {
             setFinalHit(0);
@@ -343,7 +343,7 @@ function App() {
 
       <img
         src={bagImages[bagType][bagSize]}
-        className={`bag ${shake ? "shake" : ""} ${finalShake ? "final-shake" : ""} ${fly ? "fly" : ""} ${drop ? "drop" : ""}`}
+        className={`bag ${shake ? "shake" : ""} ${finalShake == 2 ? "final-shake2" : ""}${finalShake == 3 ? "final-shake3" : ""} ${fly ? "fly" : ""} ${drop ? "drop" : ""}`}
       />
       <img src={hado} className={`hado1 ${shake ? "shake1" : ""}`} />
       <img src={hado} className={`hado2 ${shake ? "shake2" : ""}`} />
@@ -353,6 +353,7 @@ function App() {
                  ${hit ? "hit" : ""}  
                  ${finalHit == 1 ? "final-hit1" : ""}
                  ${finalHit == 2 ? "final-hit2" : ""}
+                 ${finalHit == 3 ? "final-hit3" : ""}
                  ${idle ? "idle" : ""}
                  ${idleLast ? "idle-last" : ""}`}
       >
@@ -361,6 +362,7 @@ function App() {
           className={`user-image 
                  ${finalHit == 1 ? "final-hit1" : ""}
                  ${finalHit == 2 ? "final-hit2" : ""}
+                 ${finalHit == 3 ? "final-hit3" : ""}
                  ${idleLast ? "idle-last-tilt" : ""}`}
         />
       </div>
