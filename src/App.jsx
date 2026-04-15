@@ -47,6 +47,8 @@ function App() {
   const [category, setCategory] = useState("all");
   const [bagType, setBagType] = useState("X");
   const [bagSize, setBagSize] = useState("S");
+  const [bagType2, setBagType2] = useState("X");
+  const [bagSize2, setBagSize2] = useState("S");
   const [shake, setShake] = useState(false);
   const [fly, setFly] = useState(false);
   const [drop, setDrop] = useState(false);
@@ -59,6 +61,7 @@ function App() {
   const [finalShake, setFinalShake] = useState(0);
   const [isSerectTag, setIsSerectTag] = useState(false);
   const [tag, setTag] = useState("合計");
+  const [zigOn, setZigOn] = useState(false);
   const [ev, setEv] = useState({
     H: 0,
     A: 0,
@@ -124,6 +127,8 @@ function App() {
   };
   const baseValue =
     bagSize === "S" ? 1 : bagSize === "M" ? 4 : bagSize === "L" ? 12 : 0;
+  const baseValue2 =
+    bagSize2 === "S" ? 1 : bagSize2 === "M" ? 4 : bagSize2 === "L" ? 12 : 0;
 
   const addValue = lastX ? baseValue * 2 : baseValue;
 
@@ -224,9 +229,12 @@ function App() {
           setTimeout(() => {
             setFinalShake(false);
             setFly(true);
+            setBagSize2(bagSize);
+            setBagType2(bagType);
             setTimeout(() => {
               setFly(false);
               setDrop(true);
+              setZigOn(true);
               setEv((prev) => {
                 if (bagType === "X") {
                   return prev;
@@ -265,6 +273,9 @@ function App() {
               setTimeout(() => {
                 setDrop(false);
               }, 500);
+              setTimeout(() => {
+                setZigOn(false);
+              }, 3000);
             }, 800);
           }, waitTime);
 
@@ -472,6 +483,11 @@ function App() {
           <div className="category-label">{category}</div>
         </div>
       </div>
+      {zigOn && bagType != "X" && (
+        <div className="zig">
+          {bagType2}+{baseValue2}
+        </div>
+      )}
     </div>
   );
 }

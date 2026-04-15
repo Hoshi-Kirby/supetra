@@ -1073,6 +1073,26 @@ body {
 .color-spe {
   color: #aa0dd1;
 }
+.zig {
+  position: absolute;
+  top: 30vh;
+  right: 2vw;
+
+  width: 12vh;
+  height: 6.2vh;
+
+  background-image: url("./assets/ziguzagu.png");
+  background-size: cover; /* 画像を枠いっぱいに拡大 */
+  background-position: center; /* 中央寄せ */
+  background-repeat: no-repeat;
+
+  display: flex; /* ここが重要 */
+  justify-content: center; /* 横中央 */
+  align-items: center; /* 縦中央 */
+
+  color: white;
+  font-size: 3vh;
+}
 
 @media (max-aspect-ratio: 1/1) {
   .pokemon-name {
@@ -1114,6 +1134,9 @@ body {
     bottom: calc((80vh - 30vw) * 3 / 190);
     left: calc((80vh - 30vw) * 3.1 / 190);
     width: calc(100% - (80vh - 30vw) * 6.2 / 190);
+  }
+  .zig {
+    right: 4vw;
   }
 }
 
