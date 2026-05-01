@@ -356,9 +356,6 @@ function App() {
         src={bagImages[bagType][bagSize]}
         className={`bag ${shake ? "shake" : ""} ${finalShake == 2 ? "final-shake2" : ""}${finalShake == 3 ? "final-shake3" : ""} ${fly ? "fly" : ""} ${drop ? "drop" : ""}`}
       />
-      <img src={hado} className={`hado1 ${shake ? "shake1" : ""}`} />
-      <img src={hado} className={`hado2 ${shake ? "shake2" : ""}`} />
-      <img src={hado} className={`hado3 ${shake ? "shake3" : ""}`} />
       <div
         className={`user-image-wrapper 
                  ${hit ? "hit" : ""}  
@@ -377,6 +374,23 @@ function App() {
                  ${idleLast ? "idle-last-tilt" : ""}`}
         />
       </div>
+      <img
+        src={hado}
+        className={`hado1 ${shake ? "shake1" : ""}
+                 ${finalHit == 1 ? "final-hit1" : ""}
+                 ${finalHit == 3 ? "final-hit3" : ""}`}
+      />
+      <img src={hado} className={`hado2 ${shake ? "shake2" : ""}`} />
+      <img
+        src={hado}
+        className={`hado3 ${shake ? "shake3" : ""}
+                 ${finalHit == 3 ? "final-hit3" : ""}`}
+      />
+      <img
+        src={hado}
+        className={`hado4
+                 ${finalHit == 2 ? "final-hit2" : ""}`}
+      />
       <img src={he} className="he landscape" />
       <svg className="hex-meter landscape" viewBox="-100 -100 200 200">
         <polygon points={pointString} className="hex-fill" />

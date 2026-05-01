@@ -313,6 +313,13 @@ body {
   width: 20vh;
   opacity: 0;
 }
+.hado4 {
+  position: fixed;
+  top: 40%;
+  left: 10%;
+  width: 25vh;
+  opacity: 0;
+}
 .hado1.shake1 {
   animation: hado1 0.4s ease-out;
   animation-fill-mode: forwards;
@@ -323,6 +330,22 @@ body {
 }
 .hado3.shake3 {
   animation: hado3 0.4s ease-out;
+  animation-fill-mode: forwards;
+}
+.hado1.final-hit1 {
+  animation: final-hado1-1 2.1s ease-out;
+  animation-fill-mode: forwards;
+}
+.hado1.final-hit3 {
+  animation: final-hado3-1 2.1s ease-out;
+  animation-fill-mode: forwards;
+}
+.hado3.final-hit3 {
+  animation: hado3 0.4s ease-out;
+  animation-fill-mode: forwards;
+}
+.hado4.final-hit2 {
+  animation: hado4 2.1s ease-out;
   animation-fill-mode: forwards;
 }
 @keyframes hado1 {
@@ -380,6 +403,206 @@ body {
   }
   100% {
     opacity: 0;
+  }
+}
+@keyframes final-hado1-1 {
+  0% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  60.4% {
+    opacity: 0;
+  }
+  60.5% {
+    opacity: 1;
+  }
+  58.5% {
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+@keyframes final-hado3-1 {
+  0% {
+    opacity: 0;
+  }
+  3% {
+    opacity: 0;
+  }
+  3.3% {
+    opacity: 1;
+  }
+  9% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  23.5% {
+    opacity: 0;
+  }
+  23.8% {
+    transform: scale(2);
+    opacity: 1;
+  }
+  43% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes hado4 {
+  /* 0.00：初期位置 */
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+
+  /* 0.43：サンドバッグ左（-20vw） */
+  20.2% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  20.3% {
+    opacity: 0;
+  }
+  20.4% {
+    opacity: 1;
+  }
+
+  /* 0.52：右上（+20vw, -10vw） */
+  24.5% {
+    opacity: 0;
+  }
+  24.6% {
+    transform: translate(-5vw, -5vh);
+    opacity: 0;
+  }
+  24.7% {
+    opacity: 1;
+  }
+
+  /* 0.65：左（-20vw） */
+  30.8% {
+    transform: translate(-5vw, -5vh);
+    opacity: 0;
+  }
+  30.9% {
+    transform: translate(5vw, 0);
+    opacity: 0;
+  }
+  31% {
+    opacity: 1;
+  }
+
+  /* 0.74：右（+20vw） */
+  35% {
+    transform: translate(5vw, 0);
+    opacity: 0;
+  }
+  35.1% {
+    transform: translate(-5vw, 5vh);
+    opacity: 0;
+  }
+  35.2% {
+    opacity: 1;
+  }
+
+  /* 0.85：左（-20vw, +10vw） */
+  40.2% {
+    transform: translate(-5vw, 5vh);
+    opacity: 0;
+  }
+  40.3% {
+    transform: translate(5vw, 0);
+    opacity: 0;
+  }
+  40.4% {
+    opacity: 1;
+  }
+
+  /* 0.93：右下（+20vw, +10vw） */
+  44% {
+    transform: translate(5vw, 0);
+    opacity: 0;
+  }
+  44.1% {
+    transform: translate(-5vw, 5vh);
+    opacity: 0;
+  }
+  44.2% {
+    opacity: 1;
+  }
+
+  /* 1.06：左（-20vw） */
+  50.2% {
+    transform: translate(-5vw, 5vh);
+    opacity: 0;
+  }
+  50.3% {
+    transform: translate(0, 5vh);
+    opacity: 0;
+  }
+  50.4% {
+    opacity: 1;
+  }
+
+  /* 1.14：右上（+20vw, -10vw） */
+  54% {
+    transform: translate(0, 5vh);
+    opacity: 0;
+  }
+  54.1% {
+    transform: translate(-5vw, 0);
+    opacity: 0;
+  }
+  54.2% {
+    opacity: 1;
+  }
+
+  /* 1.28：左（-20vw） */
+  60.8% {
+    transform: translate(-5vw, 0);
+    opacity: 0;
+  }
+  60.9% {
+    transform: translate(5vw, 0);
+    opacity: 0;
+  }
+  61% {
+    opacity: 1;
+  }
+
+  /* 1.37：右上（+20vw, -10vw） */
+  65% {
+    transform: translate(5vw, 0);
+    opacity: 0;
+  }
+  65.1% {
+    transform: translate(-5vw, 0);
+    opacity: 0;
+  }
+  65.2% {
+    opacity: 1;
+  }
+
+  /* 1.51：真ん中（0,0）→ サンドバッグ回転開始 */
+  71.8% {
+    transform: translate(-5vw, 0);
+    opacity: 0;
+  }
+  71.9% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  78.0% {
+    opacity: 1;
+  }
+
+  /* 2.10：静止 */
+  100% {
+    transform: translate(0, 0);
   }
 }
 
