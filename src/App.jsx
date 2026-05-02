@@ -54,6 +54,7 @@ function App() {
   const [drop, setDrop] = useState(false);
   const [tackleNum, setTackleNum] = useState(0);
   const [lastX, setLastX] = useState(false);
+  const [lastX2, setLastX2] = useState(false);
   const [userImage, setUserImage] = useState(defaultImg);
   const [imageName, setImageName] = useState("ハバタクカミ");
   const [hit, setHit] = useState(false);
@@ -131,6 +132,7 @@ function App() {
     bagSize2 === "S" ? 1 : bagSize2 === "M" ? 4 : bagSize2 === "L" ? 12 : 0;
 
   const addValue = lastX ? baseValue * 2 : baseValue;
+  const addValue2 = lastX2 ? baseValue2 * 2 : baseValue2;
 
   const handleLeftClick = (e) => {
     e.stopPropagation();
@@ -231,6 +233,7 @@ function App() {
             setFly(true);
             setBagSize2(bagSize);
             setBagType2(bagType);
+            setLastX2(lastX);
             setTimeout(() => {
               setFly(false);
               setDrop(true);
@@ -497,9 +500,9 @@ function App() {
           <div className="category-label">{category}</div>
         </div>
       </div>
-      {zigOn && bagType != "X" && (
+      {zigOn && bagType2 != "X" && (
         <div className="zig">
-          {bagType2}+{baseValue2}
+          {bagType2}+{addValue2}
         </div>
       )}
     </div>
